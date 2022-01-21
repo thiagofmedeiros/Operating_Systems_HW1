@@ -46,16 +46,11 @@ int main(int argc, char *argv[]) {
 
     int n = atoi(argv[1]);
 
-    /* shared memory file descriptor */
-    int fd;
-    /* pointer to shared memory object */
-    char *ptr;
-
     /* create the shared memory object */
-    fd=shm_open(shMemName, O_CREAT | O_RDWR,0666);
+    int fd = shm_open(shMemName, O_CREAT | O_RDWR,0666);
     /* configure the size of the shared memory object */
     ftruncate(fd, SIZE);
-
+    /* pointer to shared memory object */
     char *mainptr = (char *) mmap(0,SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 
     pid_t pid = fork();
